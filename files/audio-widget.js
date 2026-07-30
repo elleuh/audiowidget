@@ -1,21 +1,14 @@
 /**
  * Minimal auto-play audio widget
  * -------------------------------
- * Usage: add a container to your page like:
+ * <div class="audio-widget" data-src="audio/track.mp3" data-loop="false"></div>
+ * <script src="audio-widget.js"></script>
  *
- *   <div class="audio-widget" data-src="audio/track1.mp3" data-loop="false"></div>
- *   <script src="audio-widget.js"></script>
- *
- * Behavior:
- * - On the very first play button click anywhere on your site, we store a flag
- *   in localStorage ("siteAudioUnlocked"). This persists across page navigations
- *   (as long as the visitor stays on the same domain).
- * - On every later page load, if that flag is set, we immediately attempt to
- *   autoplay the track on that page. Modern browsers generally allow this once
- *   a visitor has already interacted with your site.
- * - If the browser still blocks autoplay (e.g. very first visit, or a strict
- *   browser setting), the widget just shows the play button so the visitor can
- *   tap it — no broken state, no console errors shown to the user.
+ * - First click anywhere on the site unlocks audio for the whole visit
+ *   (stored in localStorage under "siteAudioUnlocked").
+ * - On every page after that, the widget tries to autoplay immediately.
+ * - If the browser still blocks it, the play button just sits there
+ *   waiting for a tap — no errors, no broken state.
  */
 
 (function () {
@@ -34,7 +27,6 @@
     audio.loop = loop;
     audio.preload = "auto";
 
-    // Build the button (play-button-only style, no scrubber/volume/etc.)
     const btn = document.createElement("button");
     btn.className = "audio-widget-btn";
     btn.setAttribute("aria-label", "Play audio");
@@ -54,10 +46,7 @@
       if (playPromise !== undefined) {
         playPromise
           .then(() => setPlayingState(true))
-          .catch(() => {
-            // Autoplay blocked — just leave the play button visible.
-            setPlayingState(false);
-          });
+          .catch(() => setPlayingState(false));
       }
     }
 
@@ -79,18 +68,17 @@
       if (!loop) setPlayingState(false);
     });
 
-    // If a previous page already unlocked audio this session, try to autoplay now.
     if (localStorage.getItem(UNLOCK_KEY) === "true") {
       attemptAutoplay();
     }
   }
 
   function playIconSVG() {
-    return `<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+    return `<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
   }
 
   function pauseIconSVG() {
-    return `<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>`;
+    return `<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>`;
   }
 
   function init() {
