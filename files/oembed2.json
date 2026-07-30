@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "type": "rich",
+  "provider_name": "Audio Widget",
+  "provider_url": "https://elleuh.github.io/audiowidget/",
+  "title": "Audio Widget Page 2",
+  "html": "<iframe src=\"https://elleuh.github.io/audiowidget/files/page2.html\" width=\"70\" height=\"70\" style=\"border:none;overflow:hidden;\" scrolling=\"no\" allow=\"autoplay\"></iframe>",
+  "width": 70,
+  "height": 70
+}
