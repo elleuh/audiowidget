@@ -1,0 +1,33 @@
+.audio-widget {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio-widget-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #111827;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.audio-widget-btn:hover {
+  background: #1f2937;
+  transform: scale(1.05);
+}
+
+.audio-widget-btn:active {
+  transform: scale(0.95);
+}
+
+.audio-widget-btn svg {
+  margin-left: 2px; /* optical centering for the play triangle */
+}
